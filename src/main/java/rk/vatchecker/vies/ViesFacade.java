@@ -1,4 +1,4 @@
-package rk.vatchecker;
+package rk.vatchecker.vies;
 
 import eu.europa.ec.taxud.vies.services.checkvat.CheckVatPortType;
 import eu.europa.ec.taxud.vies.services.checkvat.CheckVatService;
@@ -7,7 +7,6 @@ import jakarta.xml.ws.Holder;
 import jakarta.xml.ws.soap.SOAPFaultException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import rk.vatchecker.api.ViesException;
 
 import java.util.Optional;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -18,7 +17,7 @@ public class ViesFacade {
 
     private final CheckVatService vies;
 
-    public Optional<VatData> checkVat(VatNumber vatNumber) throws ViesException {
+    public Optional<VatRegistryData> checkVat(VatNumber vatNumber) throws ViesException {
         Holder<String> country = new Holder<>(vatNumber.countryCode());
         Holder<String> number = new Holder<>(vatNumber.number());
         Holder<XMLGregorianCalendar> date = new Holder<>();
@@ -38,7 +37,7 @@ public class ViesFacade {
         }
 
         if (valid.value) {
-            return Optional.of(new VatData(name.value, address.value));
+            return Optional.of(new VatRegistryData(name.value, address.value));
         } else {
             return Optional.empty();
         }

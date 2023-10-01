@@ -1,4 +1,4 @@
-package rk.vatchecker;
+package rk.vatchecker.vies;
 
 import io.github.resilience4j.retry.Retry;
 import lombok.AllArgsConstructor;
@@ -26,10 +26,10 @@ public class ViesCaller {
     }
 
     public void add(long orderId, String vatNumber) {
-        Function<VatNumber, Optional<VatData>> viesCall = Retry.decorateFunction(retryConfig, vies::checkVat);
+        Function<VatNumber, Optional<VatRegistryData>> viesCall = Retry.decorateFunction(retryConfig, vies::checkVat);
         executors.execute(() -> {
             repository.updateStatus(orderId, IN_PROGRESS);
-            Optional<VatData> vatData = viesCall.apply(new VatNumber(vatNumber));
+            Optional<VatRegistryData> vatData = viesCall.apply(new VatNumber(vatNumber));
             vatData.ifPresentOrElse(
                     data -> repository.updateStatusAndData(orderId, COMPLETED, data),
                     () -> repository.updateStatusAndData(orderId, COMPLETED));

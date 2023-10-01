@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import rk.vatchecker.vies.ViesCaller;
 
 @AllArgsConstructor
 @Service

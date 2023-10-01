@@ -1,4 +1,4 @@
-package rk.vatchecker.api;
+package rk.vatchecker.vies;
 
 public class ViesException extends RuntimeException {
 

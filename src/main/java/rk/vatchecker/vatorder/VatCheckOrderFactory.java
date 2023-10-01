@@ -1,4 +1,4 @@
-package rk.vatchecker;
+package rk.vatchecker.vatorder;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

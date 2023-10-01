@@ -3,8 +3,8 @@ package rk.vatchecker.db;
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
-import rk.vatchecker.VatData;
-import rk.vatchecker.VatOrderResult;
+import rk.vatchecker.vies.VatRegistryData;
+import rk.vatchecker.vatorder.VatOrderResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +39,7 @@ public class VatOrderRepository {
                 .execute();
     }
 
-    public void updateStatusAndData(long orderId, VatOrderStatus status, VatData data) {
+    public void updateStatusAndData(long orderId, VatOrderStatus status, VatRegistryData data) {
         Long resultId = dsl.insertInto(VAT_CHECK_RESULT)
                 .columns(VAT_CHECK_RESULT.VALID, VAT_CHECK_RESULT.NAME, VAT_CHECK_RESULT.ADDRESS)
                 .values((byte) 1, data.name(), data.address())

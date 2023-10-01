@@ -1,4 +1,4 @@
-package rk.vatchecker;
+package rk.vatchecker.vies;
 
 import eu.europa.ec.taxud.vies.services.checkvat.CheckVatService;
 import io.github.resilience4j.core.IntervalFunction;

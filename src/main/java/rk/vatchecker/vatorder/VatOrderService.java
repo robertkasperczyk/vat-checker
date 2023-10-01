@@ -1,16 +1,16 @@
-package rk.vatchecker;
+package rk.vatchecker.vatorder;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import rk.vatchecker.api.OrderWithResult;
 import rk.vatchecker.api.VatCheckOrderNotFoundException;
 import rk.vatchecker.db.*;
+import rk.vatchecker.vies.ViesCaller;
 
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class VatService {
+public class VatOrderService {
 
     private final VatOrderRepository vatOrderRepository;
     private final ViesCaller viesCaller;

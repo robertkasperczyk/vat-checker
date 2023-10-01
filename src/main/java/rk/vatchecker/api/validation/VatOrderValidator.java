@@ -1,6 +1,7 @@
-package rk.vatchecker.api;
+package rk.vatchecker.api.validation;
 
 import org.springframework.stereotype.Service;
+import rk.vatchecker.api.InvalidVatFormatException;
 
 import java.util.regex.Pattern;
 

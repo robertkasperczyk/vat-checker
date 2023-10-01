@@ -1,4 +1,4 @@
-package rk.vatchecker;
+package rk.vatchecker.vies;
 
 public record VatNumber(String countryCode, String number) {
 
