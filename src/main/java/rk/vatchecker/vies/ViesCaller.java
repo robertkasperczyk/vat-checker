@@ -2,6 +2,7 @@ package rk.vatchecker.vies;
 
 import io.github.resilience4j.retry.Retry;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import rk.vatchecker.db.VatOrderRepository;
 
@@ -12,6 +13,7 @@ import java.util.function.Function;
 import static rk.vatchecker.db.VatOrderStatus.COMPLETED;
 import static rk.vatchecker.db.VatOrderStatus.IN_PROGRESS;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class ViesCaller {
@@ -26,7 +28,10 @@ public class ViesCaller {
     }
 
     public void add(long orderId, String vatNumber) {
-        Function<VatNumber, Optional<VatRegistryData>> viesCall = Retry.decorateFunction(retryConfig, vies::checkVat);
+        Function<VatNumber, Optional<VatRegistryData>> viesCall = Retry.decorateFunction(retryConfig, vat -> {
+            log.info("vies call");
+            return vies.checkVat(vat);
+        });
         executors.execute(() -> {
             repository.updateStatus(orderId, IN_PROGRESS);
             Optional<VatRegistryData> vatData = viesCall.apply(new VatNumber(vatNumber));

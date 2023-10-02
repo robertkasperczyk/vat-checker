@@ -26,7 +26,8 @@ public class ViesConfiguration {
     @Bean
     public Retry retryConfig() {
         RetryConfig retryConfig = RetryConfig.custom()
-                .intervalFunction(IntervalFunction.ofExponentialBackoff(100, 2))
+                .intervalFunction(IntervalFunction.ofExponentialBackoff(1000, 2))
+                .maxAttempts(Integer.MAX_VALUE)
                 .build();
         return Retry.of("vies", retryConfig);
     }
