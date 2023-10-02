@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import rk.vatchecker.StatsLogger;
 import rk.vatchecker.db.*;
 
 import java.time.LocalDateTime;
@@ -27,9 +28,12 @@ class ViesCallerUnitTest {
     private ExecutorService executors;
     @Mock
     private VatOrderRepository repository;
+    @Mock
+    private StatsLogger statsLogger;
 
     @Captor
     private ArgumentCaptor<Runnable> captor;
+
 
     private ViesCaller viesCaller;
 
@@ -38,7 +42,7 @@ class ViesCallerUnitTest {
         RetryConfig retryConfig = RetryConfig.custom()
                 .intervalFunction(IntervalFunction.ofDefaults())
                 .build();
-        viesCaller = new ViesCaller(vies, executors, repository, Retry.of("vies", retryConfig));
+        viesCaller = new ViesCaller(vies, executors, repository, Retry.of("vies", retryConfig), statsLogger);
     }
 
     @Test
@@ -59,12 +63,18 @@ class ViesCallerUnitTest {
 
         runs.get(0).run();
         verify(repository).updateStatus(1L, VatOrderStatus.IN_PROGRESS);
+        verify(statsLogger).checkInProgress();
         verify(vies).checkVat(new VatNumber(order1.vatNumber()));
+        verify(statsLogger).checkFinished();
         verify(repository).updateStatusAndData(1L, VatOrderStatus.COMPLETED);
+
+        clearInvocations(statsLogger);
 
         runs.get(1).run();
         verify(repository).updateStatus(2L, VatOrderStatus.IN_PROGRESS);
+        verify(statsLogger).checkInProgress();
         verify(vies).checkVat(new VatNumber(order1.vatNumber()));
+        verify(statsLogger).checkFinished();
         verify(repository).updateStatusAndData(2L, VatOrderStatus.COMPLETED, order2data);
     }
 
@@ -90,7 +100,9 @@ class ViesCallerUnitTest {
         assertThat(runs).hasSize(1);
         runs.get(0).run();
         verify(repository).updateStatus(1L, VatOrderStatus.IN_PROGRESS);
+        verify(statsLogger).checkInProgress();
         verify(vies).checkVat(new VatNumber(vatNumber));
+        verify(statsLogger).checkFinished();
         verify(repository).updateStatusAndData(1L, VatOrderStatus.COMPLETED, data);
     }
 
@@ -106,7 +118,9 @@ class ViesCallerUnitTest {
         assertThat(runs).hasSize(1);
         runs.get(0).run();
         verify(repository).updateStatus(1L, VatOrderStatus.IN_PROGRESS);
+        verify(statsLogger).checkInProgress();
         verify(vies).checkVat(new VatNumber(vatNumber));
+        verify(statsLogger).checkFinished();
         verify(repository).updateStatusAndData(1L, VatOrderStatus.COMPLETED);
     }
 
