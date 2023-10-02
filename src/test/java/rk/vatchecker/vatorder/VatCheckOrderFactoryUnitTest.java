@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import rk.vatchecker.db.VatCheckOrder;
 import rk.vatchecker.db.VatOrderStatus;
 import rk.vatchecker.util.TimeProvider;
-import rk.vatchecker.vatorder.VatCheckOrderFactory;
 
 import java.time.LocalDateTime;
 

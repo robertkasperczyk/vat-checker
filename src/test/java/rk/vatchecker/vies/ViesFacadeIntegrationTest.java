@@ -2,7 +2,6 @@ package rk.vatchecker.vies;
 
 import eu.europa.ec.taxud.vies.services.checkvat.CheckVatService;
 import org.junit.jupiter.api.Test;
-import rk.vatchecker.vies.*;
 
 import java.util.Optional;
 

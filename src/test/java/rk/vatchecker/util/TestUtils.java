@@ -1,11 +1,9 @@
 package rk.vatchecker.util;
 
 import lombok.experimental.UtilityClass;
-import org.assertj.core.util.Strings;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
@@ -22,7 +20,7 @@ public class TestUtils {
             try (InputStreamReader isr = new InputStreamReader(is);
                  BufferedReader reader = new BufferedReader(isr)) {
                 return Arrays.stream(reader.lines().collect(joining(System.lineSeparator()))
-                        .split(";"))
+                                .split(";"))
                         .toList();
             }
         }

@@ -3,8 +3,8 @@ package rk.vatchecker.db;
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
-import rk.vatchecker.vies.VatRegistryData;
 import rk.vatchecker.vatorder.VatOrderResult;
+import rk.vatchecker.vies.VatRegistryData;
 
 import java.util.List;
 import java.util.Optional;
